@@ -6,4 +6,8 @@ class Dice
   def roll
     rand(1..@number)
   end
+  
+  def roll_many(count=1)
+    Array.new(count) { roll }
+  end
 end

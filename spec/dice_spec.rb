@@ -4,26 +4,30 @@ describe Dice do
   describe 'd6' do
     let (:dice) { Dice.new(6) }
     
-    it "should return a number between 1 and 6 inclusive" do
-      dice.roll.should be_between(1, 6)
+    subject { dice }  
+    
+    it { should respond_to(:roll) }
+    it { should respond_to(:roll_many) }
+    
+    describe "rolling" do
+      subject { dice.roll }
+      
+      it { should be_between(1, 6) }
+      it { should be_a(Integer) }
+      
     end
     
     describe 'multiple rolls' do
-      let (:rolls) do
-        rolls = []
-        50.times do
-          rolls << dice.roll
-        end
-        rolls
+      let(:rolls) { dice.roll_many(30) }
+      
+      subject { rolls }
+      
+      it "should not return all the same value" do
+        subject.uniq.size.should be > 4
       end
-
-      it "should return random results" do
-        rolls.uniq.length.should be > 3
-      end
-
-      it "shouldn't gives 0s, 7s, or 25s" do
-        rolls.should_not include 0, 7, 25
-      end
+      
+      its(:size) { should be(30) }
+      it { should_not include(0, 7, 25) }
       
     end
   end
