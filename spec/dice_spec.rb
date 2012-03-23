@@ -25,12 +25,7 @@ describe Dice do
       it "should not return all the same value" do
         subject.uniq.size.should be > 4
       end
-      
-<<<<<<< Updated upstream
-      its(:size) { should be(30) }
-      it { should_not include(0, 7, 25) }
-      
-=======
+
       its(:size) { should be 30 }
       it { should_not include 0, 7, 25 }
       
@@ -42,7 +37,6 @@ describe Dice do
         
         its(:size) { should be 2 }
       end
->>>>>>> Stashed changes
     end
   end
 end
