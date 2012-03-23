@@ -11,3 +11,4 @@ class Dice
     Array.new(count) { roll }
   end
 end
+

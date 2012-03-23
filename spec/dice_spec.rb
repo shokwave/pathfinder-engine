@@ -26,9 +26,23 @@ describe Dice do
         subject.uniq.size.should be > 4
       end
       
+<<<<<<< Updated upstream
       its(:size) { should be(30) }
       it { should_not include(0, 7, 25) }
       
+=======
+      its(:size) { should be 30 }
+      it { should_not include 0, 7, 25 }
+      
+    end
+    
+    describe 'rolling with drops' do
+      describe 'dropping lowest' do
+        let(:droponce) { dice.roll_many_drop 4, 1}
+        
+        its(:size) { should be 2 }
+      end
+>>>>>>> Stashed changes
     end
   end
 end
