@@ -33,9 +33,11 @@ describe Dice do
     
     describe 'rolling with drops' do
       describe 'dropping lowest' do
-        let(:droponce) { dice.roll_many_drop 4, 1}
+        let(:droponce) { dice.roll_many_drop 4, 1 }
+        subject { droponce }
         
         its(:size) { should be 2 }
+        its(:last) { should be < subject[0].last }
       end
     end
   end
