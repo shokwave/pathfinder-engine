@@ -10,5 +10,10 @@ class Dice
   def roll_many(count=1)
     Array.new(count) { roll }
   end
+  
+  def roll_many_drop(count=4, drop=1)
+    arr = roll_many(count).sort.reverse
+    [arr.first(arr.size - drop), arr.last(drop)]
+  end
 end
 
