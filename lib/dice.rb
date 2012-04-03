@@ -3,22 +3,35 @@
 # It has pretty sensible defaults.
 # Dice remember their history, for 'what-if' experimenting.
 class Dice
+  
+  attr_reader :history, :sides
+  
   def initialize(number)
-    @number = number
+    @sides = number
+    @history = []
   end
     
   def roll
-    rand(1..@number)
+    result = rand(1..@sides)
+    @history << result
+    result
   end
   
   def roll_many(count=1)
-    Array.new(count) { roll }
+    result = Array.new(count) { rand(1..@sides) }
+    @history << result
+    result
   end
   
   def roll_many_drop(count=4, drop=1)
-    arr = roll_many(count).sort.reverse
-    [arr.first(arr.size - drop), arr.last(drop)]
+    arr = Array.new(count) { rand(1..@sides) }
+    arr.sort!.reverse!
+    result = [arr.first(arr.size - drop), arr.last(drop)]
+    @history << result
+    result
   end
+  
+  
 end
 
 
