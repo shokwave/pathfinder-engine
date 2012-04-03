@@ -9,6 +9,7 @@ describe Dice do
     it { should respond_to(:roll) }
     it { should respond_to(:roll_many) }
     it { should respond_to(:roll_many_drop) }
+    it { should respond_to(:history) }
     
     describe "rolling" do
       subject { dice.roll }
@@ -37,9 +38,33 @@ describe Dice do
         let(:droponce) { dice.roll_many_drop 4, 1 }
         subject { droponce }
         
-        its(:size) { should be 2 }
-        its(:last) { should be < subject[0].last }
+        it "should be two arrays" do
+          subject.size.should be 2
+        end
+        it "should have its last number be its smallest" do
+          subject.first.last.should be > subject.last.first
+        end
       end
+    end
+  end
+end
+
+describe Handful do
+  let (:damage_dice) { Handful.new "damage", [6, 6, 6, 6] }
+  subject { damage_dice }
+  
+  it { should respond_to(:roll) }
+  # it { should respond_to(:roll_one) }
+  # it { should respond_to(:add) }
+  # it { should respond_to(:history) }
+  
+  describe "rolling" do
+    subject { damage_dice.roll }
+    
+    its(:size) { should be 4 }
+    it { should be_a(Array) }
+    it "should not have any elements outside of one to six" do
+      subject.each {|val| val.should be_between(1, 6) }
     end
   end
 end
