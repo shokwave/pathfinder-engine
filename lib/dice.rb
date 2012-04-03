@@ -41,4 +41,32 @@ end
 # 'roll' will roll all the dice once.
 # It will access the history of these dice, for 'what-if' experimenting.
 class Handful
+  attr_accessor :die, :name
+  def initialize(title, *sides)
+    @name = title
+    @sides = sides
+    @die = []
+    @sides.each {|side| @die << Dice.new(side)}
+  end
+  def to_s
+    the_sides = []
+    @sides.each{|side| the_sides << "d"+"#{side}"+"\t" }
+    the_histories = []
+    @die.each{|die_obj| the_histories << die_obj.history }
+    info = the_sides.zip the_histories
+    "These are #{title} dice.
+    #{info}"
+  end
+  def roll
+    @die.each do |die|
+      die.roll
+    end
+  end
+  # Very technical: rolls one die, nil in all other die to preserve matching history.  
+  def roll_one diceindex
+    result = @die[diceindex].roll
+    others = @die.partition{ |obj| obj == @die[diceindex] }.last
+    others.each { |obj| obj.history << nil }
+    result
+  end
 end

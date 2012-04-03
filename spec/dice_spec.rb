@@ -90,11 +90,12 @@ describe Dice do
   end
 end
 describe Handful do
-  let (:damage_dice) { Handful.new "damage", [6, 6, 6, 6] }
+  
+  let (:damage_dice) { Handful.new "damage", 6, 6, 6, 6 }
   subject { damage_dice }
   
   it { should respond_to(:roll) }
-  # it { should respond_to(:roll_one) }
+  it { should respond_to(:roll_one) }
   # it { should respond_to(:add) }
   # it { should respond_to(:history) }
   
@@ -104,7 +105,13 @@ describe Handful do
     its(:size) { should be 4 }
     it { should be_a(Array) }
     it "should not have any elements outside of one to six" do
-      subject.each {|val| val.should be_between(1, 6) }
+      subject.each {|dice| dice.history.first.should be_between(1, 6) }
     end
+    it "should have different results in each history" do
+      histories = []
+      subject.each {|dice| histories << dice.history.first}
+      histories.uniq.size.should be > 1
+    end
+    
   end
 end
