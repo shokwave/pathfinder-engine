@@ -1,4 +1,3 @@
-
 class Item
   attr_accessor :name, :attributes
   
